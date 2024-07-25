@@ -1,0 +1,18 @@
+# This workflow will run cflint on any code that request to be merged to master and validates the code.
+# This workflow will not allow a user to merge a request if the code does not pass validation.
+# If the code does pass validation the request will be allowed to merge with the master repo.
+name: Pull Request workflow 1
+
+on:
+  - pull_request
+
+jobs:
+  cloudformation-linter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Linter install
+        uses: scottbrenner/cfn-lint-action@v2
+        with:
+          command: cfn-lint -t ./cfn-template.yaml
